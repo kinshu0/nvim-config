@@ -39,26 +39,34 @@ require("lazy").setup({
   { -- File tree
     "nvim-tree/nvim-tree.lua",
     config = function()
-      require("nvim-tree").setup()
+      require("nvim-tree").setup({
+        renderer = {
+          icons = {
+            show = {
+              file = false,
+              folder = false,
+              folder_arrow = false,
+              git = false,
+            },
+          },
+        },
+      })
       vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
     end,
   },
 
-  -- { -- pymple
-  --   "alexpasmantier/pymple.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --   },
-  --   build = ":PympleBuild",
-  --   config = function()
-  --     require("pymple").setup()
-  --   end,
-  -- },
-
   { -- Treesitter
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate | :TSInstall lua python javascript typescript json yaml markdown",
+  },
+
+  { -- Tidal Cycles live coding
+    "tidalcycles/vim-tidal",
+    ft = "tidal",
+    init = function()
+      vim.g.tidal_target = "terminal"
+      vim.g.tidal_boot = vim.fn.expand("~/.cabal/store/ghc-9.4.8/tdl-1.10.3-f5eee92b/share/BootTidal.hs")
+    end,
   },
 
 })

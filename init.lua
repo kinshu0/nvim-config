@@ -2,6 +2,10 @@ require("plugins")
 require("session")
 require("lsp")
 
+-- Disable filetype-based indentation (but keep filetype detection for LSP)
+vim.cmd("filetype plugin on")
+vim.cmd("filetype indent off")
+
 vim.opt.number = true
 
 vim.opt.tabstop = 4

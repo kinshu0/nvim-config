@@ -1,36 +1,71 @@
 # Neovim Config
 
-Minimalist setup for Python development.
+Minimal Neovim setup with LSP, fuzzy finding, and file tree.
 
 ## Requirements
 
-- Neovim 0.11+
-- Python, Node.js, Rust
+- Neovim 0.10+
+- pyright (Python language server)
+- ripgrep (for live grep search)
+- fd (optional, for faster file finding)
 
-## Install
+## Installation
+
+### On macOS
 
 ```bash
-# Neovim 0.11+
-curl -Lo https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.bashrc
-source ~/.bashrc
+# Install Neovim
+brew install neovim
 
-# Dependencies (Ubuntu/Debian)
-sudo apt install build-essential fd-find ripgrep
-sudo ln -s $(which fdfind) /usr/local/bin/fd
+# Install dependencies
+brew install pyright ripgrep fd
 
-# Rust + grip-grab (for pymple)
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
-cargo install grip-grab
+# Clone or copy this config to ~/.config/nvim
+# Then launch nvim - plugins will auto-install on first run
+nvim
+```
 
-# Python LSP
+### On Linux
+
+```bash
+# Install pyright
 pip install pyright
 
-# Copy config
-cp -r . ~/.config/nvim
+# Install ripgrep and fd
+sudo apt install ripgrep fd-find  # Ubuntu/Debian
+# or
+sudo dnf install ripgrep fd-find  # Fedora
 
-# Launch nvim - plugins auto-install
+# Clone or copy this config to ~/.config/nvim
+# Then launch nvim - plugins will auto-install on first run
 nvim
+```
+
+## Plugins
+
+- **lazy.nvim** - Plugin manager (auto-bootstraps)
+- **Telescope** - Fuzzy finder for files, text, buffers
+- **nvim-tree** - File explorer
+- **nvim-lspconfig** - LSP support
+- **nvim-treesitter** - Better syntax highlighting
+
+## Keybindings
+
+### Telescope
+- `<leader>ff` - Find files
+- `<leader>fg` - Live grep (search in files)
+- `<leader>fb` - Browse open buffers
+- `<leader>fh` - Search help tags
+
+### File Tree
+- `<leader>e` - Toggle nvim-tree
+
+### LSP (when attached to Python files)
+- `gd` - Go to definition
+- `grr` - Find references
+- `grn` - Rename symbol
+- `K` - Show hover documentation
+
+## Session Management
+
+Sessions auto-save as `.Session.vim` in your working directory when you exit Neovim (if opened with no arguments). They auto-load when you open Neovim in that directory again.
